@@ -38,7 +38,9 @@ func (g *Game) Update() error {
 	}
 
 	if ok := g.curSceneParams.Get(g.context); ok {
+		g.currentScene.OnDestroy(g.context)
 		g.currentScene = g.curSceneParams.Scene
+		g.currentScene.OnLoad(g.context)
 	}
 
 	return g.currentScene.Update(g.context)
