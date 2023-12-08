@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 	"github.com/caarlos0/env/v10"
-	"sigengine/pkg/config"
-	"sigengine/pkg/gameapp/game"
-	"sigengine/pkg/gameapp/input"
+	"github.com/homaderakagames/sigengine/pkg/config"
+	"github.com/homaderakagames/sigengine/pkg/game"
+	"github.com/homaderakagames/sigengine/pkg/gameapp/input"
 )
 
 type GameApp struct {
