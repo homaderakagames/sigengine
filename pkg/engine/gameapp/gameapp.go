@@ -1,7 +1,6 @@
 package gameapp
 
 import (
-	"context"
 	"fmt"
 	"github.com/caarlos0/env/v10"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -18,17 +17,15 @@ type GameApp struct {
 	input   *input.Input
 	game    *game.Game
 	context *gamecontext.Context
-	cancel  context.CancelFunc
 }
 
 func NewGameApp(ctrl scene.Scene) *GameApp {
-	ctx, cancel := gamecontext.NewContext(context.Background()).WithCancel()
+	ctx := gamecontext.NewContext()
 	ctrl.OnLoad(ctx)
 
 	ga := &GameApp{
 		context: ctx,
-		cancel:  cancel,
-		game:    game.NewGame(ctrl, ctx, cancel),
+		game:    game.NewGame(ctrl, ctx),
 	}
 	ga.initInput()
 

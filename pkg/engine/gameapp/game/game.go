@@ -19,23 +19,18 @@ type Game struct {
 func NewGame(
 	sc scene.Scene,
 	ctx *gamecontext.Context,
-	cancel context.CancelFunc,
 ) *Game {
+	log.Println("NEW GAME")
 
 	return &Game{
 		currentScene:   sc,
 		context:        ctx,
-		cancel:         cancel,
 		curSceneParams: &scene.Params{},
 	}
 }
 
 func (g *Game) Update() error {
-	select {
-	case <-g.context.Done():
-		return ebiten.Termination
-	default:
-	}
+	log.Println("GAME UPDATE")
 
 	if ok := g.curSceneParams.Get(g.context); ok {
 		g.currentScene.OnDestroy(g.context)
