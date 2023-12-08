@@ -17,13 +17,13 @@ type Game struct {
 }
 
 func NewGame(
-	scene scene.Scene,
+	sc scene.Scene,
 	ctx *gamecontext.Context,
 	cancel context.CancelFunc,
 ) *Game {
 
 	return &Game{
-		currentScene:   scene,
+		currentScene:   sc,
 		context:        ctx,
 		cancel:         cancel,
 		curSceneParams: &scene.Params{},
