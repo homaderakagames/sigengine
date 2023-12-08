@@ -7,4 +7,7 @@ import (
 type Controller interface {
 	Update(ctx *Context) error
 	Draw(screen *ebiten.Image) error
+
+	// Вызывается в самом начале
+	OnAppInit(ctx *Context) error
 }
