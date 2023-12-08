@@ -3,26 +3,30 @@ package game
 import (
 	"context"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/homaderakagames/sigengine/pkg/engine/gameapp/gamecontext"
+	"github.com/homaderakagames/sigengine/pkg/engine/gameapp/scene"
 	"log"
 )
 
 type Game struct {
-	controller Controller
+	currentScene   scene.Scene
+	curSceneParams *scene.Params
 
-	context *Context
+	context *gamecontext.Context
 	cancel  context.CancelFunc
 }
 
 func NewGame(
-	controller Controller,
-	ctx *Context,
+	scene scene.Scene,
+	ctx *gamecontext.Context,
 	cancel context.CancelFunc,
 ) *Game {
 
 	return &Game{
-		controller: controller,
-		context:    ctx,
-		cancel:     cancel,
+		currentScene:   scene,
+		context:        ctx,
+		cancel:         cancel,
+		curSceneParams: &scene.Params{},
 	}
 }
 
@@ -32,12 +36,17 @@ func (g *Game) Update() error {
 		return ebiten.Termination
 	default:
 	}
-	return g.controller.Update(g.context)
+
+	if ok := g.curSceneParams.Get(g.context); ok {
+		g.currentScene = g.curSceneParams.Scene
+	}
+
+	return g.currentScene.Update(g.context)
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	if err := g.controller.Draw(screen); err != nil {
-		log.Printf("controller draw: %v", err)
+	if err := g.currentScene.Draw(screen); err != nil {
+		log.Printf("current scene draw: %v", err)
 		return
 	}
 }

@@ -1,4 +1,4 @@
-package game
+package gamecontext
 
 import "context"
 

@@ -7,7 +7,9 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/homaderakagames/sigengine/pkg/engine/config"
 	"github.com/homaderakagames/sigengine/pkg/engine/gameapp/game"
+	"github.com/homaderakagames/sigengine/pkg/engine/gameapp/gamecontext"
 	"github.com/homaderakagames/sigengine/pkg/engine/gameapp/input"
+	"github.com/homaderakagames/sigengine/pkg/engine/gameapp/scene"
 	"log"
 )
 
@@ -15,13 +17,13 @@ type GameApp struct {
 	config  *config.Common
 	input   *input.Input
 	game    *game.Game
-	context *game.Context
+	context *gamecontext.Context
 	cancel  context.CancelFunc
 }
 
-func NewGameApp(ctrl game.Controller) *GameApp {
-	ctx, cancel := game.NewContext(context.Background()).WithCancel()
-	ctrl.OnAppInit(ctx)
+func NewGameApp(ctrl scene.Scene) *GameApp {
+	ctx, cancel := gamecontext.NewContext(context.Background()).WithCancel()
+	ctrl.OnLoad(ctx)
 
 	ga := &GameApp{
 		context: ctx,
