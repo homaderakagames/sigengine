@@ -20,7 +20,6 @@ func NewGame(
 	sc scene.Scene,
 	ctx *gamecontext.Context,
 ) *Game {
-	log.Println("NEW GAME")
 
 	return &Game{
 		currentScene:   sc,
@@ -30,7 +29,6 @@ func NewGame(
 }
 
 func (g *Game) Update() error {
-	log.Println("GAME UPDATE")
 
 	if ok := g.curSceneParams.Get(g.context); ok {
 		g.currentScene.OnDestroy(g.context)
