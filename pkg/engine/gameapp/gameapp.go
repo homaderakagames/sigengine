@@ -9,25 +9,33 @@ import (
 	"github.com/homaderakagames/sigengine/pkg/engine/gameapp/gamecontext"
 	"github.com/homaderakagames/sigengine/pkg/engine/gameapp/input"
 	"github.com/homaderakagames/sigengine/pkg/engine/gameapp/scene"
+	"github.com/homaderakagames/sigengine/pkg/engine/resources"
 	"log"
 )
 
 type GameApp struct {
-	config  *config.Common
-	input   *input.Input
-	game    *game.Game
-	context *gamecontext.Context
+	config          *config.Common
+	input           *input.Input
+	game            *game.Game
+	context         *gamecontext.Context
+	resourceManager *resources.ResourceManager
 }
 
-func NewGameApp(ctrl scene.Scene) *GameApp {
+func NewGameApp(
+	startingScene scene.Scene,
+	resourceManager *resources.ResourceManager,
+) *GameApp {
 	ctx := gamecontext.NewContext()
-	ctrl.OnLoad(ctx)
+	ctx.Put(resources.GetFontManagerKey, resourceManager.FontManager)
+	startingScene.OnLoad(ctx)
 
 	ga := &GameApp{
-		context: ctx,
-		game:    game.NewGame(ctrl, ctx),
+		context:         ctx,
+		game:            game.NewGame(startingScene, ctx),
+		resourceManager: resourceManager,
 	}
 	ga.initInput()
+	// TODO: parse and set window size ebiten.SetWindowSize(, 720)
 
 	return ga
 }
