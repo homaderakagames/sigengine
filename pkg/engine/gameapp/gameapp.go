@@ -26,7 +26,7 @@ func NewGameApp(
 	resourceManager *resources.ResourceManager,
 ) *GameApp {
 	ctx := gamecontext.NewContext()
-	ctx.Put(resources.GetFontManagerKey, resourceManager.FontManager)
+	ctx.Put(resources.GetResourceManager, resourceManager)
 	startingScene.OnLoad(ctx)
 
 	ga := &GameApp{
