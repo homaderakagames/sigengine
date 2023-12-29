@@ -57,7 +57,7 @@ func (ga *GameApp) ParseConfig(cfg interface{}) {
 }
 
 func (ga *GameApp) initInput() {
-	ga.input = input.NewInput()
+	ga.input = input.NewInput(&input.EbitenKeyboardAdapter{})
 
 }
 
