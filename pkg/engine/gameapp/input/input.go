@@ -6,21 +6,6 @@ import (
 
 type KeyState int
 
-func (st *KeyState) nextKeyState() (prevState KeyState, curState KeyState) {
-	switch *st {
-	case KeyStateNotPressed:
-		curState = KeyStatePressed
-	case KeyStatePressed:
-		curState = KeyStateHold
-	case KeyStateHold:
-		curState = KeyStateReleased
-	case KeyStateReleased:
-		curState = KeyStateNotPressed
-	}
-	prevState = *st
-	return
-}
-
 const (
 	KeyStateNotPressed KeyState = iota
 	KeyStatePressed
@@ -50,9 +35,13 @@ func (in *Input) GetButtonState(key ebiten.Key) KeyState {
 		}
 
 		// released
-		_, next := curKeyState.nextKeyState()
-		in.keyStates[key] = KeyStateReleased
-		return next
+		if curKeyState == KeyStateHold {
+			in.keyStates[key] = KeyStateReleased
+			return KeyStateReleased
+		}
+
+		in.keyStates[key] = KeyStateNotPressed
+		return KeyStateNotPressed
 	}
 
 	if curKeyState == KeyStateNotPressed {
@@ -61,9 +50,7 @@ func (in *Input) GetButtonState(key ebiten.Key) KeyState {
 	}
 
 	if curKeyState == KeyStatePressed {
-		_, next := curKeyState.nextKeyState()
-		in.keyStates[key] = next
-		return next
+		in.keyStates[key] = KeyStateHold
 	}
 
 	return KeyStateHold
