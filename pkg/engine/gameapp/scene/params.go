@@ -23,3 +23,7 @@ func (p *Params) Get(ctx *gamecontext.Context) (ok bool) {
 func (p *Params) Set(ctx *gamecontext.Context) {
 	ctx.Put(ChangeSceneKey, p.Scene)
 }
+
+func (p *Params) Unset(ctx *gamecontext.Context) {
+	ctx.Unset(ChangeSceneKey)
+}

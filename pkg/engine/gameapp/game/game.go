@@ -33,6 +33,7 @@ func (g *Game) Update() error {
 		g.currentScene.OnDestroy(g.context)
 		g.currentScene = g.curSceneParams.Scene
 		g.currentScene.OnLoad(g.context)
+		g.curSceneParams.Unset(g.context)
 	}
 
 	return g.currentScene.Update(g.context)

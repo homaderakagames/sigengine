@@ -18,3 +18,7 @@ func (c *Context) Put(k, v any) {
 func (c *Context) Get(k any) any {
 	return c.storage[k]
 }
+
+func (c *Context) Unset(k any) {
+	delete(c.storage, k)
+}
