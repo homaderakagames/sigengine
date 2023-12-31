@@ -32,3 +32,7 @@ func (v *Vector[T]) WithAdd(o *Vector[T]) *Vector[T] {
 	v.Y += o.Y
 	return v
 }
+
+func (v *Vector[T]) Equal(o *Vector[T]) bool {
+	return v.X == o.X && v.Y == o.Y
+}
