@@ -25,3 +25,10 @@ func (v *Vector[T]) WithXY(x, y T) *Vector[T] {
 	v.Y = y
 	return v
 }
+
+// WithAdd прибавляет значения вектора o, возвращает указатель на исходный вектор
+func (v *Vector[T]) WithAdd(o *Vector[T]) *Vector[T] {
+	v.X += o.X
+	v.Y += o.Y
+	return v
+}
