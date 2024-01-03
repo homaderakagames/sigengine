@@ -1,12 +1,17 @@
 package vec2
 
-import "cmp"
+// Number любое число
+type Number interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
+		~float32 | ~float64
+}
 
-type Vector[T cmp.Ordered] struct {
+type Vector[T Number] struct {
 	X, Y T
 }
 
-func NewVector[T cmp.Ordered](x, y T) *Vector[T] {
+func NewVector[T Number](x, y T) *Vector[T] {
 	return &Vector[T]{x, y}
 }
 
@@ -35,4 +40,10 @@ func (v *Vector[T]) WithAdd(o *Vector[T]) *Vector[T] {
 
 func (v *Vector[T]) Equal(o *Vector[T]) bool {
 	return v.X == o.X && v.Y == o.Y
+}
+
+func (v *Vector[T]) WithSub(other *Vector[T]) *Vector[T] {
+	v.X -= other.X
+	v.Y -= other.Y
+	return v
 }
